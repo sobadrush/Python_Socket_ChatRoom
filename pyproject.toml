@@ -1,0 +1,9 @@
+[project]
+
+name = "python-socket-chatroom"
+version = "0.1.0"
+description = "Python Socket 聊天室練習專案"
+requires-python = ">=3.13,<3.14"
+
+[tool.uv]
+# uv 會自動讀取 requires-python 欄位

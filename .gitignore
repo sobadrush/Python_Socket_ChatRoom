@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+.eggs/
+*.egg
+*.manifest
+*.spec
+*.log
+*.sqlite3
+
+# Virtualenv/venv/uv
+.venv/
+venv/
+.uv/
+.uv-cache/
+
+# Ruff
+.ruff_cache/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Others
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Test/coverage
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# System
+Thumbs.db
+desktop.ini

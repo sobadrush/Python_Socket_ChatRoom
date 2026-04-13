@@ -6,6 +6,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 try:
     sock.bind(("0.0.0.0", 5000))
+    sock.setblocking(False) # 設定為非阻塞模式，讓 recvfrom() 不會卡住整個程式
 except OSError as e:
     print(f"無法綁定端口 5000: {e}")
     print("請檢查端口是否已被佔用")
@@ -18,10 +19,10 @@ def receive_messages():
         try:
             data, addr = sock.recvfrom(1024)
             print(f"\n[收到來自 {addr[0]}]：{data.decode('utf-8')}")
-        except OSError as e:
+        except BlockingIOError as e:
+            # 【沒收到信】沒信也無所謂，裝作沒事繼續看電視（畫遊戲畫面）！
             print(f"接收訊息時發生錯誤: {e}")
-        except Exception as e:
-            print(f"發生未預期的錯誤: {e}")
+            pass
 
 
 # 召喚小精靈去背景執行 (與主程式分工合作)，daemon=True 代表這個小精靈會隨著主程式結束而自動消失，不會獨立存在。

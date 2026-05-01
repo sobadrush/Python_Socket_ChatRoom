@@ -41,7 +41,7 @@ while True:
         enemy_x = enemy_package['x']
         enemy_y = enemy_package['y']
         
-    except BlockingIOError:
+    except (BlockingIOError, ConnectionResetError):
         # 沒有信？當作沒發生，程式繼續往下走！
         pass
     except json.JSONDecodeError:

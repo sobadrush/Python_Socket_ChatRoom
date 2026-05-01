@@ -95,7 +95,7 @@ def receive_data():
             if "bg" in pkg:
                 bg_color = pkg["bg"]
             print(f"收到對手座標: x={enemy_x}, y={enemy_y}")
-        except BlockingIOError:
+        except (BlockingIOError, ConnectionResetError):
             pass
         except Exception as e:
             print(f"接收錯誤: {e}")

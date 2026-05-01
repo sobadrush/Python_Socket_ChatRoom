@@ -19,7 +19,7 @@ def receive_messages():
         try:
             data, addr = sock.recvfrom(1024)
             print(f"\n[收到來自 {addr[0]}]：{data.decode('utf-8')}")
-        except BlockingIOError as e:
+        except (BlockingIOError, ConnectionResetError) as e:
             # 【沒收到信】沒信也無所謂，裝作沒事繼續看電視（畫遊戲畫面）！
             print(f"接收訊息時發生錯誤: {e}")
             pass

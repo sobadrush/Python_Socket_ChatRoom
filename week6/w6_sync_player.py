@@ -44,6 +44,10 @@ while True:
     except BlockingIOError:
         # 沒有信？當作沒發生，程式繼續往下走！
         pass
+    except OSError as e:
+        if e.errno == 10035:
+            # Windows：WSAEWOULDBLOCK，代表目前沒有資料可讀，與 macOS/Linux 的 BlockingIOError 效果相同
+            pass
     except json.JSONDecodeError:
         # 防止有人亂傳不是 JSON 格式的垃圾訊息導致閃退
         pass

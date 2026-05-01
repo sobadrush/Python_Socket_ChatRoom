@@ -97,8 +97,12 @@ def receive_data():
             print(f"收到對手座標: x={enemy_x}, y={enemy_y}")
         except BlockingIOError:
             pass
-        except Exception as e:
-            print(f"接收錯誤: {e}")
+        except OSError as e:
+            if e.errno == 10035:
+                # Windows：WSAEWOULDBLOCK，代表目前沒有資料可讀
+                pass
+            else:
+                print(f"接收錯誤: {e}")
 
 
 def change_background():

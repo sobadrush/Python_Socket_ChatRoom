@@ -24,6 +24,35 @@
    python practice_01_receive.py
    ```
 
+## `sock.recvfrom()` 在 Windows 與 macOS 的錯誤處理差異
+
+當 UDP Socket 設定為**非阻塞模式**（`sock.setblocking(False)`）且目前沒有資料可讀時，`recvfrom()` 的行為因作業系統而異：
+
+| 作業系統 | 拋出的例外 | errno |
+|---|---|---|
+| macOS / Linux | `BlockingIOError` | `EAGAIN` / `EWOULDBLOCK` (11) |
+| Windows | `OSError` | `WSAEWOULDBLOCK` (10035) |
+
+> **注意**：`BlockingIOError` 是 `OSError` 的子類別，因此在 macOS/Linux 上兩者都可以捕捉到；但在 Windows 上只會拋出 `OSError`（errno 10035），必須另外處理。
+
+### 跨平台建議寫法
+
+```python
+try:
+    data, addr = sock.recvfrom(1024)
+    # 處理收到的資料...
+except BlockingIOError:
+    # macOS / Linux：目前沒有資料可讀，忽略即可
+    pass
+except OSError as e:
+    if e.errno == 10035:
+        # Windows：WSAEWOULDBLOCK，目前沒有資料可讀，效果與 macOS/Linux 的 BlockingIOError 相同
+        pass
+    else:
+        # 其他真正的網路錯誤才需要處理
+        print(f"接收訊息時發生錯誤: {e}")
+```
+
 ## 常見忽略檔
 本專案已於 `.gitignore` 忽略 VSCode、macOS、IntelliJ、Python、uv、venv 等常見快取與環境檔案。
 
